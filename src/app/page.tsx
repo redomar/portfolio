@@ -1,60 +1,189 @@
-import { Github, Linkedin, Coffee, Code, Cloud, Gamepad2, Sparkles, Zap } from "lucide-react";
+"use client";
+
+import {
+  Github,
+  Linkedin,
+  Coffee,
+  Code,
+  Cloud,
+  Gamepad2,
+  Sparkles,
+  Zap,
+  Computer,
+} from "lucide-react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+
+function TypewriterText({
+  text,
+  speed = 100,
+  wordDisplayTime = 2000,
+  className = "",
+}: {
+  text: string;
+  speed?: number;
+  wordDisplayTime?: number;
+  className?: string;
+}) {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
+  const [currentWord, setCurrentWord] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [isFirstWord, setIsFirstWord] = useState(true);
+
+  const words = useState(() =>
+    text.split(/[,\s]+/).filter((word) => word.length > 0)
+  )[0];
+
+  const getRandomWord = () => {
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex];
+  };
+
+  useEffect(() => {
+    const startNewWord = () => {
+      let newWord;
+      if (isFirstWord) {
+        // Always show first word initially
+        newWord = words[0];
+        setIsFirstWord(false);
+      } else {
+        // Random word for subsequent iterations
+        newWord = getRandomWord();
+      }
+      setCurrentWord(newWord);
+      setDisplayText("");
+      setCurrentIndex(0);
+      setIsTyping(true);
+    };
+
+    // Start with first word
+    if (!currentWord) {
+      startNewWord();
+      return;
+    }
+
+    if (isTyping && currentIndex < currentWord.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText((prev) => prev + currentWord[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    } else if (isTyping && currentIndex >= currentWord.length) {
+      setIsTyping(false);
+    } else if (!isTyping && currentWord) {
+      // Wait before showing next word (only after typing is complete)
+      const timeout = setTimeout(() => {
+        startNewWord();
+      }, wordDisplayTime);
+      return () => clearTimeout(timeout);
+    }
+  }, [
+    currentIndex,
+    currentWord,
+    isTyping,
+    speed,
+    wordDisplayTime,
+    isFirstWord,
+  ]);
+
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor((prev) => !prev);
+    }, 500);
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  return (
+    <span className={className}>
+      {displayText}
+      <span
+        className={`inline-block ml-1 text-[#00d4ff] ${
+          showCursor ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        ▁
+      </span>
+    </span>
+  );
+}
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0d0d10] relative overflow-hidden">
       {/* Flowing decorative lines */}
-      <div className="flowing-line top-[20%] text-[#ff0080] opacity-60" style={{ animationDelay: '0s' }}></div>
-      <div className="flowing-line top-[40%] text-[#00d4ff] opacity-60" style={{ animationDelay: '2s' }}></div>
-      <div className="flowing-line top-[60%] text-[#00ff88] opacity-60" style={{ animationDelay: '4s' }}></div>
+      <div
+        className="flowing-line top-[20%] text-[#ff0080] opacity-60"
+        style={{ animationDelay: "0s" }}
+      ></div>
+      <div
+        className="flowing-line top-[40%] text-[#00d4ff] opacity-60"
+        style={{ animationDelay: "2s" }}
+      ></div>
+      <div
+        className="flowing-line top-[60%] text-[#00ff88] opacity-60"
+        style={{ animationDelay: "4s" }}
+      ></div>
 
       {/* Hero Section - Bento Grid */}
       <section className="p-4 md:p-8 max-w-[1600px] mx-auto">
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[200px]">
-
           {/* Main Hero Card - Large */}
           <div className="md:col-span-8 md:row-span-3 bg-[#1a1a1f] relative overflow-hidden vhs-scanlines retro-border">
             <div className="absolute inset-0 holographic-gradient opacity-20"></div>
             <div className="relative z-10 p-8 md:p-12 h-full flex flex-col justify-between">
               <div className="lens-flare">
                 <h1 className="text-6xl md:text-8xl lg:text-9xl font-anton uppercase text-white leading-[0.9] tracking-tight">
-                  MEGACOLOR
+                  Mohamed Omar
                 </h1>
                 <div className="mt-2 text-xl md:text-2xl font-bebas-neue text-white/80 tracking-[0.3em]">
-                  120 VHS VIDEO CASSETTE
+                  https://Redomar.co.uk
                 </div>
               </div>
               <div className="mt-8">
-                <h2 className="text-4xl md:text-6xl font-anton uppercase text-white mb-2">
-                  Mohamed Omar
-                </h2>
-                <p className="text-2xl md:text-3xl font-bebas-neue tracking-widest" style={{
-                  background: 'linear-gradient(90deg, #ff0080, #00d4ff, #00ff88)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
+               
+                <h2
+                  className="text-4xl md:text-6xl font-bebas-neue tracking-wide"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #ff0080, #00d4ff, #00ff88)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
                   SENIOR SOFTWARE DEVELOPER
-                </p>
+                </h2>
+                 <h3 className="text-xl md:text-md font-anton uppercase text-white mb-2 tracking-widest">
+                  Experianced in Cloud Solutions & React Applications
+                </h3>
               </div>
             </div>
           </div>
 
           {/* Photo Card */}
-          <div className="md:col-span-4 md:row-span-3 relative overflow-hidden retro-border">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#ff0080]/20 to-[#00d4ff]/20 z-10"></div>
-            <Image
-              src="/me.jpeg"
-              alt="Mohamed Omar"
-              fill
-              className="object-cover grayscale-[30%]"
-              sizes="(max-width: 768px) 100vw, 33vw"
-              priority
-            />
-            <div className="absolute top-4 right-4 z-20 bg-black/80 px-4 py-2 font-bebas-neue text-white tracking-wider border-2 border-[#00d4ff]">
-              SHADOWS OF INFINITY
+          <div className="md:col-span-4 md:row-span-3 hover:bg-gradient-to-br from-[#ff0080]/50 to-[#00d4ff]/50 relative overflow-hidden vhs-scanlines retro-border p-6 md:p-8">
+            {/* Unsplash retro computer image */}
+            <div className="absolute inset-0 opacity-60">
+              <Image
+                src="/outlook.jpeg"
+                alt="Mohamed Omar"
+                fill
+                className="object-cover"
+                style={{ objectPosition: "87% center" }}
+                sizes="(max-width: 768px) 100vw, 33vw"
+                priority
+              />
+            </div>
+            <div className="absolute top-4 right-4 z-20 bg-black/80 px-6 py-3 font-mono text-white tracking-wider border-2 border-[#00d4ff] min-w-[50px]">
+              <TypewriterText
+                text="Programmer, Photographer, Adventurer, Scripter, Gamer, Muslim, Reader, Bot_Laner"
+                speed={100}
+                wordDisplayTime={3000}
+                className="text-sm font-bold"
+              />
             </div>
           </div>
 
@@ -145,7 +274,9 @@ export default function Home() {
                 <li>→ Set engineering standards for secure API integration</li>
               </ul>
             </div>
-            <div className="absolute bottom-4 right-4 w-20 h-20 border-2 border-[#ff0080]/30"></div>
+            <div className="absolute bottom-4 right-4 w-20 h-20">
+              <Cloud className="size-20 text-[#ff0080]/30" />
+            </div>
           </div>
 
           <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6">
@@ -155,17 +286,19 @@ export default function Home() {
                 2023-2024
               </div>
               <h3 className="text-2xl md:text-3xl font-anton uppercase text-white mb-2">
-                Cloud Engineer
+                Software Engineer Consultant
               </h3>
               <p className="text-sm font-bebas-neue text-white/60 mb-4">
                 PWC UK
               </p>
               <ul className="space-y-2 text-sm text-white/80">
-                <li>→ Architected infrastructure with Terraform</li>
-                <li>→ Migrated 10+ services to Azure with Kubernetes</li>
+                <li>→ Integrated ServiceNow with GitHub and cloud platforms</li>
+                <li>→ Migrated services to Azure with Kubernetes</li>
               </ul>
             </div>
-            <div className="absolute bottom-4 right-4 w-20 h-20 border-2 border-[#00d4ff]/30"></div>
+            <div className="absolute bottom-4 right-4 w-20 h-20">
+              <Zap className="size-20 text-[#00d4ff]/30" />
+            </div>
           </div>
 
           <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6">
@@ -181,11 +314,15 @@ export default function Home() {
                 OGL COMPUTER
               </p>
               <ul className="space-y-2 text-sm text-white/80">
-                <li>→ Led architectural decisions for Spring Boot microservices</li>
+                <li>
+                  → Led architectural decisions for Spring Boot microservices
+                </li>
                 <li>→ Built CRM integrations</li>
               </ul>
             </div>
-            <div className="absolute bottom-4 right-4 w-20 h-20 border-2 border-[#00ff88]/30"></div>
+            <div className="absolute bottom-4 right-4 w-20 h-20">
+              <Computer className="size-20 text-[#00ff88]/30" />
+            </div>
           </div>
 
           {/* Skills Section - Magazine Style */}
@@ -329,21 +466,23 @@ export default function Home() {
             <div className="absolute inset-0 holographic-gradient opacity-20 mix-blend-overlay"></div>
             <div className="relative z-10 h-full flex items-center justify-center p-8">
               <div className="text-center bg-black/60 p-8 border-4 border-white/20">
-                <div className="text-6xl md:text-8xl font-anton uppercase text-white">
-                  80s
+                <div className="text-5xl md:text-7xl font-anton uppercase text-white">
+                  REDOMAR
                 </div>
-                <div className="text-xl font-bebas-neue tracking-[0.5em]" style={{
-                  background: 'linear-gradient(90deg, #ff0080, #00d4ff)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
-                  RETRO VIBES
+                <div
+                  className="text-xl font-bebas-neue tracking-[0.5em]"
+                  style={{
+                    background: "linear-gradient(90deg, #ff0080, #00d4ff)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  Mohamed Omar
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </section>
     </div>
