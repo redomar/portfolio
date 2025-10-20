@@ -1,205 +1,349 @@
-import { Github, Linkedin, Coffee, Code, Cloud, Gamepad2 } from "lucide-react";
+import { Github, Linkedin, Coffee, Code, Cloud, Gamepad2, Sparkles, Zap } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      {/* Hero Section - Coral */}
-      <section className="bg-[#ED727E] p-8 md:p-16 m-6 md:m-12">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-[2fr_1fr] gap-8 items-start">
-            {/* Text Content */}
-            <div className="flex flex-col gap-4">
-              <h1 className="text-7xl md:text-9xl font-anton uppercase text-white leading-tight">
-                Mohamed
-                <br />
-                Omar
-              </h1>
-              <p className="text-2xl md:text-3xl font-bebas-neue text-white tracking-wide">
-                Senior Software Developer
-              </p>
-            </div>
-            {/* Photo - Bento Style */}
-            <div className="relative aspect-square md:aspect-[3/4]">
-              <Image
-                src="/me.jpeg"
-                alt="Mohamed Omar - Senior Software Developer"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 33vw"
-                priority
-              />
+    <div className="min-h-screen bg-[#0d0d10] relative overflow-hidden">
+      {/* Flowing decorative lines */}
+      <div className="flowing-line top-[20%] text-[#ff0080] opacity-60" style={{ animationDelay: '0s' }}></div>
+      <div className="flowing-line top-[40%] text-[#00d4ff] opacity-60" style={{ animationDelay: '2s' }}></div>
+      <div className="flowing-line top-[60%] text-[#00ff88] opacity-60" style={{ animationDelay: '4s' }}></div>
+
+      {/* Hero Section - Bento Grid */}
+      <section className="p-4 md:p-8 max-w-[1600px] mx-auto">
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[200px]">
+
+          {/* Main Hero Card - Large */}
+          <div className="md:col-span-8 md:row-span-3 bg-[#1a1a1f] relative overflow-hidden vhs-scanlines retro-border">
+            <div className="absolute inset-0 holographic-gradient opacity-20"></div>
+            <div className="relative z-10 p-8 md:p-12 h-full flex flex-col justify-between">
+              <div className="lens-flare">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-anton uppercase text-white leading-[0.9] tracking-tight">
+                  MEGACOLOR
+                </h1>
+                <div className="mt-2 text-xl md:text-2xl font-bebas-neue text-white/80 tracking-[0.3em]">
+                  120 VHS VIDEO CASSETTE
+                </div>
+              </div>
+              <div className="mt-8">
+                <h2 className="text-4xl md:text-6xl font-anton uppercase text-white mb-2">
+                  Mohamed Omar
+                </h2>
+                <p className="text-2xl md:text-3xl font-bebas-neue tracking-widest" style={{
+                  background: 'linear-gradient(90deg, #ff0080, #00d4ff, #00ff88)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>
+                  SENIOR SOFTWARE DEVELOPER
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* About Section - Yellow */}
-      <section className="bg-[#F9D871] p-8 md:p-16 m-6 md:m-12">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-archivo-black uppercase text-gray-900 mb-6">
-            About
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <p className="text-xl md:text-2xl font-sans text-gray-800 leading-relaxed">
+          {/* Photo Card */}
+          <div className="md:col-span-4 md:row-span-3 relative overflow-hidden retro-border">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#ff0080]/20 to-[#00d4ff]/20 z-10"></div>
+            <Image
+              src="/me.jpeg"
+              alt="Mohamed Omar"
+              fill
+              className="object-cover grayscale-[30%]"
+              sizes="(max-width: 768px) 100vw, 33vw"
+              priority
+            />
+            <div className="absolute top-4 right-4 z-20 bg-black/80 px-4 py-2 font-bebas-neue text-white tracking-wider border-2 border-[#00d4ff]">
+              SHADOWS OF INFINITY
+            </div>
+          </div>
+
+          {/* About Card - Wide */}
+          <div className="md:col-span-7 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6 md:p-8">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#ff0080]/10 rounded-full blur-3xl"></div>
+            <div className="relative z-10">
+              <h2 className="text-4xl md:text-6xl font-anton uppercase text-white mb-4 tracking-tight">
+                ABOUT
+              </h2>
+              <div className="h-1 w-32 holographic-gradient mb-6"></div>
+              <p className="text-lg md:text-xl text-white/90 leading-relaxed font-sans mb-6">
                 I'm a Senior Cloud Engineer at PwC UK, specializing in building
                 enterprise React applications and architecting cloud
                 infrastructure. I love creating scalable solutions with modern
                 technologies.
               </p>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <Coffee className="w-8 h-8" />
-                <span className="text-xl font-bebas-neue tracking-wide">
-                  Coffee Enthusiast
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Gamepad2 className="w-8 h-8" />
-                <span className="text-xl font-bebas-neue tracking-wide">
-                  Gaming & Anime Fan
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Code className="w-8 h-8" />
-                <span className="text-xl font-bebas-neue tracking-wide">
-                  Tech Tinkerer
-                </span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="flex items-center gap-3 bg-white/5 p-3 border border-[#00d4ff]/30">
+                  <Coffee className="w-6 h-6 text-[#00d4ff]" />
+                  <span className="text-sm font-bebas-neue tracking-wide text-white">
+                    COFFEE ENTHUSIAST
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 bg-white/5 p-3 border border-[#ff0080]/30">
+                  <Gamepad2 className="w-6 h-6 text-[#ff0080]" />
+                  <span className="text-sm font-bebas-neue tracking-wide text-white">
+                    GAMING & ANIME
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 bg-white/5 p-3 border border-[#00ff88]/30">
+                  <Code className="w-6 h-6 text-[#00ff88]" />
+                  <span className="text-sm font-bebas-neue tracking-wide text-white">
+                    TECH TINKERER
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Experience Section - Peach */}
-      <section className="bg-[#F0916F] p-8 md:p-16 m-6 md:m-12">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-archivo-black uppercase text-white mb-8">
-            Experience
-          </h2>
-          <div className="space-y-8">
-            <div className="border-l-4 border-white pl-6">
-              <h3 className="text-3xl font-bebas-neue tracking-wide text-white">
+          {/* Decorative Tech Card */}
+          <div className="md:col-span-5 md:row-span-2 bg-gradient-to-br from-[#00d4ff] to-[#b200ff] relative overflow-hidden vhs-scanlines p-6 md:p-8">
+            {/* Unsplash retro computer image */}
+            <div className="absolute inset-0 opacity-20">
+              <Image
+                src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"
+                alt="Retro tech aesthetic"
+                fill
+                className="object-cover mix-blend-overlay"
+                unoptimized
+              />
+            </div>
+            <div className="relative z-10 h-full flex flex-col justify-between">
+              <div>
+                <div className="text-xs font-bebas-neue tracking-[0.3em] text-white/80 mb-2">
+                  DIGITAL INNOVATION
+                </div>
+                <h3 className="text-5xl md:text-7xl font-anton uppercase text-white leading-tight mb-4">
+                  CLOUD
+                  <br />
+                  ARCHITECT
+                </h3>
+              </div>
+              <div className="flex gap-4">
+                <Cloud className="w-16 h-16 text-white/20" />
+                <Sparkles className="w-16 h-16 text-white/20" />
+                <Zap className="w-16 h-16 text-white/20" />
+              </div>
+            </div>
+            <div className="absolute -bottom-10 -right-10 w-64 h-64 border-4 border-white/20 rounded-full"></div>
+          </div>
+
+          {/* Experience Cards */}
+          <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6">
+            <div className="absolute inset-0 holographic-gradient-alt opacity-5"></div>
+            <div className="relative z-10">
+              <div className="text-xs font-bebas-neue tracking-[0.3em] text-[#ff0080] mb-2">
+                2024-2025
+              </div>
+              <h3 className="text-2xl md:text-3xl font-anton uppercase text-white mb-2">
                 Senior Cloud Engineer
               </h3>
-              <p className="text-xl font-bebas-neue text-white/80">
-                PwC UK • 2024-2025
+              <p className="text-sm font-bebas-neue text-white/60 mb-4">
+                PWC UK
               </p>
-              <ul className="mt-3 space-y-2 text-lg text-white/90">
-                <li>
-                  • Led development of enterprise React applications for AI
-                  tools
-                </li>
-                <li>• Set engineering standards for secure API integration</li>
+              <ul className="space-y-2 text-sm text-white/80">
+                <li>→ Led development of enterprise React applications</li>
+                <li>→ Set engineering standards for secure API integration</li>
               </ul>
             </div>
-            <div className="border-l-4 border-white pl-6">
-              <h3 className="text-3xl font-bebas-neue tracking-wide text-white">
+            <div className="absolute bottom-4 right-4 w-20 h-20 border-2 border-[#ff0080]/30"></div>
+          </div>
+
+          <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6">
+            <div className="absolute inset-0 holographic-gradient opacity-5"></div>
+            <div className="relative z-10">
+              <div className="text-xs font-bebas-neue tracking-[0.3em] text-[#00d4ff] mb-2">
+                2023-2024
+              </div>
+              <h3 className="text-2xl md:text-3xl font-anton uppercase text-white mb-2">
                 Cloud Engineer
               </h3>
-              <p className="text-xl font-bebas-neue text-white/80">
-                PwC UK • 2023-2024
+              <p className="text-sm font-bebas-neue text-white/60 mb-4">
+                PWC UK
               </p>
-              <ul className="mt-3 space-y-2 text-lg text-white/90">
-                <li>• Architected infrastructure with Terraform</li>
-                <li>• Migrated 10+ services to Azure with Kubernetes</li>
+              <ul className="space-y-2 text-sm text-white/80">
+                <li>→ Architected infrastructure with Terraform</li>
+                <li>→ Migrated 10+ services to Azure with Kubernetes</li>
               </ul>
             </div>
-            <div className="border-l-4 border-white pl-6">
-              <h3 className="text-3xl font-bebas-neue tracking-wide text-white">
+            <div className="absolute bottom-4 right-4 w-20 h-20 border-2 border-[#00d4ff]/30"></div>
+          </div>
+
+          <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6">
+            <div className="absolute inset-0 holographic-gradient-alt opacity-5"></div>
+            <div className="relative z-10">
+              <div className="text-xs font-bebas-neue tracking-[0.3em] text-[#00ff88] mb-2">
+                2021-2022
+              </div>
+              <h3 className="text-2xl md:text-3xl font-anton uppercase text-white mb-2">
                 Integration Engineer
               </h3>
-              <p className="text-xl font-bebas-neue text-white/80">
-                OGL Computer • 2021-2022
+              <p className="text-sm font-bebas-neue text-white/60 mb-4">
+                OGL COMPUTER
               </p>
-              <ul className="mt-3 space-y-2 text-lg text-white/90">
-                <li>
-                  • Led architectural decisions for Java Spring Boot
-                  microservices
-                </li>
-                <li>• Built CRM integrations</li>
+              <ul className="space-y-2 text-sm text-white/80">
+                <li>→ Led architectural decisions for Spring Boot microservices</li>
+                <li>→ Built CRM integrations</li>
               </ul>
             </div>
+            <div className="absolute bottom-4 right-4 w-20 h-20 border-2 border-[#00ff88]/30"></div>
           </div>
-        </div>
-      </section>
 
-      {/* Skills Section - Blue */}
-      <section className="bg-[#395D76] p-8 md:p-16 m-6 md:m-12">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-archivo-black uppercase text-white mb-8">
-            Skills
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-3xl font-bebas-neue tracking-wide text-white mb-4">
-                Languages
-              </h3>
-              <ul className="space-y-2 text-lg text-white/90">
-                <li>• JavaScript</li>
-                <li>• TypeScript</li>
-                <li>• Java</li>
-                <li>• Python</li>
-              </ul>
+          {/* Skills Section - Magazine Style */}
+          <div className="md:col-span-12 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6 md:p-8">
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 left-0 w-96 h-96 bg-[#ff0080] rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#00d4ff] rounded-full blur-3xl"></div>
             </div>
-            <div>
-              <h3 className="text-3xl font-bebas-neue tracking-wide text-white mb-4">
-                Frameworks
-              </h3>
-              <ul className="space-y-2 text-lg text-white/90">
-                <li>• React</li>
-                <li>• Node.js</li>
-                <li>• Spring Boot</li>
-                <li>• TanStack</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-3xl font-bebas-neue tracking-wide text-white mb-4">
-                Tools
-              </h3>
-              <ul className="space-y-2 text-lg text-white/90">
-                <li>• Docker</li>
-                <li>• Kubernetes</li>
-                <li>• AWS</li>
-                <li>• Terraform</li>
-              </ul>
+            <div className="relative z-10">
+              <h2 className="text-5xl md:text-7xl font-anton uppercase text-white mb-6 tracking-tight">
+                TECH STACK
+              </h2>
+              <div className="h-1 w-48 holographic-gradient mb-8"></div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white/5 p-6 border-l-4 border-[#ff0080]">
+                  <h3 className="text-2xl font-bebas-neue tracking-widest text-[#ff0080] mb-4">
+                    LANGUAGES
+                  </h3>
+                  <div className="space-y-2 text-white/90">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#ff0080]"></div>
+                      <span>JavaScript</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#ff0080]"></div>
+                      <span>TypeScript</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#ff0080]"></div>
+                      <span>Java</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#ff0080]"></div>
+                      <span>Python</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white/5 p-6 border-l-4 border-[#00d4ff]">
+                  <h3 className="text-2xl font-bebas-neue tracking-widest text-[#00d4ff] mb-4">
+                    FRAMEWORKS
+                  </h3>
+                  <div className="space-y-2 text-white/90">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#00d4ff]"></div>
+                      <span>React</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#00d4ff]"></div>
+                      <span>Node.js</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#00d4ff]"></div>
+                      <span>Spring Boot</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#00d4ff]"></div>
+                      <span>TanStack</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white/5 p-6 border-l-4 border-[#00ff88]">
+                  <h3 className="text-2xl font-bebas-neue tracking-widest text-[#00ff88] mb-4">
+                    TOOLS
+                  </h3>
+                  <div className="space-y-2 text-white/90">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#00ff88]"></div>
+                      <span>Docker</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#00ff88]"></div>
+                      <span>Kubernetes</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#00ff88]"></div>
+                      <span>AWS</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#00ff88]"></div>
+                      <span>Terraform</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Contact Section - Coral */}
-      <section className="bg-[#ED727E] p-8 md:p-16 m-6 md:m-12">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-archivo-black uppercase text-white mb-8">
-            Let's Connect
-          </h2>
-          <div className="flex gap-6">
-            <a
-              href="https://github.com/redomar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 bg-white px-6 py-3 hover:bg-white/90 transition-colors"
-            >
-              <Github className="w-6 h-6" />
-              <span className="text-xl font-bebas-neue tracking-wide">
-                GitHub
-              </span>
-            </a>
-            <a
-              href="https://linkedin.com/in/redomar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 bg-white px-6 py-3 hover:bg-white/90 transition-colors"
-            >
-              <Linkedin className="w-6 h-6" />
-              <span className="text-xl font-bebas-neue tracking-wide">
-                LinkedIn
-              </span>
-            </a>
+          {/* Contact Card */}
+          <div className="md:col-span-8 md:row-span-2 bg-gradient-to-br from-[#ff0080] via-[#b200ff] to-[#00d4ff] relative overflow-hidden vhs-scanlines p-8 md:p-12">
+            <div className="relative z-10 h-full flex flex-col justify-between">
+              <div className="lens-flare">
+                <h2 className="text-5xl md:text-8xl font-anton uppercase text-white mb-4 tracking-tight leading-tight">
+                  LET'S
+                  <br />
+                  CONNECT
+                </h2>
+                <div className="text-sm font-bebas-neue tracking-[0.3em] text-white/80">
+                  REACH OUT FOR COLLABORATIONS
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="https://github.com/redomar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-black/80 px-6 py-4 hover:bg-black transition-colors border-2 border-white group"
+                >
+                  <Github className="w-6 h-6 text-white group-hover:text-[#00d4ff] transition-colors" />
+                  <span className="text-xl font-bebas-neue tracking-wide text-white">
+                    GITHUB
+                  </span>
+                </a>
+                <a
+                  href="https://linkedin.com/in/redomar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-black/80 px-6 py-4 hover:bg-black transition-colors border-2 border-white group"
+                >
+                  <Linkedin className="w-6 h-6 text-white group-hover:text-[#00d4ff] transition-colors" />
+                  <span className="text-xl font-bebas-neue tracking-wide text-white">
+                    LINKEDIN
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border-4 border-white/10 rounded-full"></div>
           </div>
+
+          {/* Decorative Image Card */}
+          <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border">
+            {/* Unsplash retro neon image */}
+            <div className="absolute inset-0">
+              <Image
+                src="https://images.unsplash.com/photo-1557683316-973673baf926?w=800&q=80"
+                alt="Neon retro aesthetic"
+                fill
+                className="object-cover opacity-60"
+                unoptimized
+              />
+            </div>
+            <div className="absolute inset-0 holographic-gradient opacity-20 mix-blend-overlay"></div>
+            <div className="relative z-10 h-full flex items-center justify-center p-8">
+              <div className="text-center bg-black/60 p-8 border-4 border-white/20">
+                <div className="text-6xl md:text-8xl font-anton uppercase text-white">
+                  80s
+                </div>
+                <div className="text-xl font-bebas-neue tracking-[0.5em]" style={{
+                  background: 'linear-gradient(90deg, #ff0080, #00d4ff)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>
+                  RETRO VIBES
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
     </div>
