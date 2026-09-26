@@ -136,8 +136,19 @@
   body {
     @apply bg-background text-foreground;
     position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Dark mode background */
+  .dark body {
     background: #0d0d10;
   }
+
+  /* Light mode background */
+  body:not(.dark) {
+    background: #F9F7F3;
+  }
+
   body::before {
     content: '';
     position: fixed;
@@ -147,9 +158,17 @@
     height: 100%;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.05;
+    transition: opacity 0.3s ease;
     background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuNSIvPjwvc3ZnPg==');
     mix-blend-mode: overlay;
+  }
+
+  .dark body::before {
+    opacity: 0.05;
+  }
+
+  body:not(.dark)::before {
+    opacity: 0.02;
   }
 }
 

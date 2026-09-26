@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Geist, Geist_Mono, Anton, Archivo_Black, Permanent_Marker } from "next/font/google";
 import "./globals.css";
+import { SiteFooter } from "@/components/site-footer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,11 +49,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${bebasNeue.variable} ${anton.variable} ${archivoBlack.variable} ${permanentMarker.variable} antialiased bg-[#F9F7F3]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bebasNeue.variable} ${anton.variable} ${archivoBlack.variable} ${permanentMarker.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+          {children}
+          <SiteFooter />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -10,9 +10,12 @@ import {
   Sparkles,
   Zap,
   Computer,
+  Funnel,
 } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { ProjectCard } from "@/components/project-card";
 
 function TypewriterText({
   text,
@@ -111,7 +114,8 @@ function TypewriterText({
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0d0d10] relative overflow-hidden">
+    <div className="min-h-screen bg-[#F9F7F3] dark:bg-[#0d0d10] relative overflow-hidden transition-colors duration-300">
+      <ThemeToggle />
       {/* Flowing decorative lines */}
       <div
         className="flowing-line top-[20%] text-[#ff0080] opacity-60"
@@ -131,19 +135,18 @@ export default function Home() {
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[200px]">
           {/* Main Hero Card - Large */}
-          <div className="md:col-span-8 md:row-span-3 bg-[#1a1a1f] relative overflow-hidden vhs-scanlines retro-border">
+          <div className="md:col-span-8 md:row-span-3 bg-white dark:bg-[#1a1a1f] relative overflow-hidden vhs-scanlines retro-border transition-colors duration-300">
             <div className="absolute inset-0 holographic-gradient opacity-20"></div>
             <div className="relative z-10 p-8 md:p-12 h-full flex flex-col justify-between">
               <div className="lens-flare">
-                <h1 className="text-6xl md:text-8xl lg:text-9xl font-anton uppercase text-white leading-[0.9] tracking-tight">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-anton uppercase text-[#1a1a1f] dark:text-white leading-[0.9] tracking-tight transition-colors duration-300">
                   Mohamed Omar
                 </h1>
-                <div className="mt-2 text-xl md:text-2xl font-bebas-neue text-white/80 tracking-[0.3em]">
+                <div className="mt-2 text-xl md:text-2xl font-bebas-neue text-[#1a1a1f]/70 dark:text-white/80 tracking-[0.3em] transition-colors duration-300">
                   https://Redomar.co.uk
                 </div>
               </div>
               <div className="mt-8">
-               
                 <h2
                   className="text-4xl md:text-6xl font-bebas-neue tracking-wide"
                   style={{
@@ -156,7 +159,7 @@ export default function Home() {
                 >
                   SENIOR SOFTWARE DEVELOPER
                 </h2>
-                 <h3 className="text-xl md:text-md font-anton uppercase text-white mb-2 tracking-widest">
+                <h3 className="text-xl md:text-md font-anton uppercase text-[#1a1a1f] dark:text-white mb-2 tracking-widest transition-colors duration-300">
                   Experianced in Cloud Solutions & React Applications
                 </h3>
               </div>
@@ -188,35 +191,35 @@ export default function Home() {
           </div>
 
           {/* About Card - Wide */}
-          <div className="md:col-span-7 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6 md:p-8">
+          <div className="md:col-span-7 md:row-span-2 bg-white dark:bg-[#1a1a1f] relative overflow-hidden retro-border p-6 md:p-8 transition-colors duration-300">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#ff0080]/10 rounded-full blur-3xl"></div>
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-anton uppercase text-white mb-4 tracking-tight">
+              <h2 className="text-4xl md:text-6xl font-anton uppercase text-[#1a1a1f] dark:text-white mb-4 tracking-tight transition-colors duration-300">
                 ABOUT
               </h2>
               <div className="h-1 w-32 holographic-gradient mb-6"></div>
-              <p className="text-lg md:text-xl text-white/90 leading-relaxed font-sans mb-6">
+              <p className="text-lg md:text-xl text-[#1a1a1f]/90 dark:text-white/90 leading-relaxed font-sans mb-6 transition-colors duration-300">
                 I'm a Senior Cloud Engineer at PwC UK, specializing in building
                 enterprise React applications and architecting cloud
                 infrastructure. I love creating scalable solutions with modern
                 technologies.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="flex items-center gap-3 bg-white/5 p-3 border border-[#00d4ff]/30">
+                <div className="flex items-center gap-3 bg-[#1a1a1f]/5 dark:bg-white/5 p-3 border border-[#00d4ff]/30 transition-colors duration-300">
                   <Coffee className="w-6 h-6 text-[#00d4ff]" />
-                  <span className="text-sm font-bebas-neue tracking-wide text-white">
+                  <span className="text-sm font-bebas-neue tracking-wide text-[#1a1a1f] dark:text-white transition-colors duration-300">
                     COFFEE ENTHUSIAST
                   </span>
                 </div>
-                <div className="flex items-center gap-3 bg-white/5 p-3 border border-[#ff0080]/30">
+                <div className="flex items-center gap-3 bg-[#1a1a1f]/5 dark:bg-white/5 p-3 border border-[#ff0080]/30 transition-colors duration-300">
                   <Gamepad2 className="w-6 h-6 text-[#ff0080]" />
-                  <span className="text-sm font-bebas-neue tracking-wide text-white">
+                  <span className="text-sm font-bebas-neue tracking-wide text-[#1a1a1f] dark:text-white transition-colors duration-300">
                     GAMING & ANIME
                   </span>
                 </div>
-                <div className="flex items-center gap-3 bg-white/5 p-3 border border-[#00ff88]/30">
+                <div className="flex items-center gap-3 bg-[#1a1a1f]/5 dark:bg-white/5 p-3 border border-[#00ff88]/30 transition-colors duration-300">
                   <Code className="w-6 h-6 text-[#00ff88]" />
-                  <span className="text-sm font-bebas-neue tracking-wide text-white">
+                  <span className="text-sm font-bebas-neue tracking-wide text-[#1a1a1f] dark:text-white transition-colors duration-300">
                     TECH TINKERER
                   </span>
                 </div>
@@ -257,19 +260,19 @@ export default function Home() {
           </div>
 
           {/* Experience Cards */}
-          <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6">
+          <div className="md:col-span-4 md:row-span-2 bg-white dark:bg-[#1a1a1f] relative overflow-hidden retro-border p-6 transition-colors duration-300">
             <div className="absolute inset-0 holographic-gradient-alt opacity-5"></div>
             <div className="relative z-10">
               <div className="text-xs font-bebas-neue tracking-[0.3em] text-[#ff0080] mb-2">
                 2024-2025
               </div>
-              <h3 className="text-2xl md:text-3xl font-anton uppercase text-white mb-2">
+              <h3 className="text-2xl md:text-3xl font-anton uppercase text-[#1a1a1f] dark:text-white mb-2 transition-colors duration-300">
                 Senior Cloud Engineer
               </h3>
-              <p className="text-sm font-bebas-neue text-white/60 mb-4">
+              <p className="text-sm font-bebas-neue text-[#1a1a1f]/60 dark:text-white/60 mb-4 transition-colors duration-300">
                 PWC UK
               </p>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-[#1a1a1f]/80 dark:text-white/80 transition-colors duration-300">
                 <li>→ Led development of enterprise React applications</li>
                 <li>→ Set engineering standards for secure API integration</li>
               </ul>
@@ -279,19 +282,19 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6">
+          <div className="md:col-span-4 md:row-span-2 bg-white dark:bg-[#1a1a1f] relative overflow-hidden retro-border p-6 transition-colors duration-300">
             <div className="absolute inset-0 holographic-gradient opacity-5"></div>
             <div className="relative z-10">
               <div className="text-xs font-bebas-neue tracking-[0.3em] text-[#00d4ff] mb-2">
                 2023-2024
               </div>
-              <h3 className="text-2xl md:text-3xl font-anton uppercase text-white mb-2">
+              <h3 className="text-2xl md:text-3xl font-anton uppercase text-[#1a1a1f] dark:text-white mb-2 transition-colors duration-300">
                 Software Engineer Consultant
               </h3>
-              <p className="text-sm font-bebas-neue text-white/60 mb-4">
+              <p className="text-sm font-bebas-neue text-[#1a1a1f]/60 dark:text-white/60 mb-4 transition-colors duration-300">
                 PWC UK
               </p>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-[#1a1a1f]/80 dark:text-white/80 transition-colors duration-300">
                 <li>→ Integrated ServiceNow with GitHub and cloud platforms</li>
                 <li>→ Migrated services to Azure with Kubernetes</li>
               </ul>
@@ -301,19 +304,19 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6">
+          <div className="md:col-span-4 md:row-span-2 bg-white dark:bg-[#1a1a1f] relative overflow-hidden retro-border p-6 transition-colors duration-300">
             <div className="absolute inset-0 holographic-gradient-alt opacity-5"></div>
             <div className="relative z-10">
               <div className="text-xs font-bebas-neue tracking-[0.3em] text-[#00ff88] mb-2">
                 2021-2022
               </div>
-              <h3 className="text-2xl md:text-3xl font-anton uppercase text-white mb-2">
+              <h3 className="text-2xl md:text-3xl font-anton uppercase text-[#1a1a1f] dark:text-white mb-2 transition-colors duration-300">
                 Integration Engineer
               </h3>
-              <p className="text-sm font-bebas-neue text-white/60 mb-4">
+              <p className="text-sm font-bebas-neue text-[#1a1a1f]/60 dark:text-white/60 mb-4 transition-colors duration-300">
                 OGL COMPUTER
               </p>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-[#1a1a1f]/80 dark:text-white/80 transition-colors duration-300">
                 <li>
                   → Led architectural decisions for Spring Boot microservices
                 </li>
@@ -326,22 +329,22 @@ export default function Home() {
           </div>
 
           {/* Skills Section - Magazine Style */}
-          <div className="md:col-span-12 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border p-6 md:p-8">
+          <div className="md:col-span-12 md:row-span-2 bg-white dark:bg-[#1a1a1f] relative overflow-hidden retro-border p-6 md:p-8 transition-colors duration-300">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-0 left-0 w-96 h-96 bg-[#ff0080] rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#00d4ff] rounded-full blur-3xl"></div>
             </div>
             <div className="relative z-10">
-              <h2 className="text-5xl md:text-7xl font-anton uppercase text-white mb-6 tracking-tight">
+              <h2 className="text-5xl md:text-7xl font-anton uppercase text-[#1a1a1f] dark:text-white mb-6 tracking-tight transition-colors duration-300">
                 TECH STACK
               </h2>
               <div className="h-1 w-48 holographic-gradient mb-8"></div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white/5 p-6 border-l-4 border-[#ff0080]">
+                <div className="bg-[#1a1a1f]/5 dark:bg-white/5 p-6 border-l-4 border-[#ff0080] transition-colors duration-300">
                   <h3 className="text-2xl font-bebas-neue tracking-widest text-[#ff0080] mb-4">
                     LANGUAGES
                   </h3>
-                  <div className="space-y-2 text-white/90">
+                  <div className="space-y-2 text-[#1a1a1f]/90 dark:text-white/90 transition-colors duration-300">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-[#ff0080]"></div>
                       <span>JavaScript</span>
@@ -360,11 +363,11 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-white/5 p-6 border-l-4 border-[#00d4ff]">
+                <div className="bg-[#1a1a1f]/5 dark:bg-white/5 p-6 border-l-4 border-[#00d4ff] transition-colors duration-300">
                   <h3 className="text-2xl font-bebas-neue tracking-widest text-[#00d4ff] mb-4">
                     FRAMEWORKS
                   </h3>
-                  <div className="space-y-2 text-white/90">
+                  <div className="space-y-2 text-[#1a1a1f]/90 dark:text-white/90 transition-colors duration-300">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-[#00d4ff]"></div>
                       <span>React</span>
@@ -383,11 +386,11 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-white/5 p-6 border-l-4 border-[#00ff88]">
+                <div className="bg-[#1a1a1f]/5 dark:bg-white/5 p-6 border-l-4 border-[#00ff88] transition-colors duration-300">
                   <h3 className="text-2xl font-bebas-neue tracking-widest text-[#00ff88] mb-4">
                     TOOLS
                   </h3>
-                  <div className="space-y-2 text-white/90">
+                  <div className="space-y-2 text-[#1a1a1f]/90 dark:text-white/90 transition-colors duration-300">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-[#00ff88]"></div>
                       <span>Docker</span>
@@ -406,6 +409,49 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Projects Section */}
+          <div className="md:col-span-full md:row-span-3 bg-white dark:bg-[#1a1a1f] relative overflow-hidden retro-border transition-colors duration-300">
+            <div className="bg-amber-100/90 h-full flex flex-col">
+              {/* Header Section */}
+              <div className="p-8 md:p-12">
+                <h2 className="text-5xl md:text-7xl font-anton uppercase text-[#1a1a1f] mb-4 tracking-tight">
+                  FEATURED PROJECTS
+                </h2>
+                <div className="h-1 w-48 holographic-gradient mb-4"></div>
+                <p className="text-lg text-[#1a1a1f]/80 max-w-3xl">
+                  A collection of personal projects showcasing my passion for
+                  software development, from microservice architectures to game
+                  development. Each project represents a learning journey and
+                  experimentation with different technologies.
+                </p>
+              </div>
+
+              {/* Project Cards */}
+              <div className="*:border-b *:border-white">
+                <ProjectCard
+                  icon={Funnel}
+                  iconColor="bg-[#ff6600]"
+                  repoName="Redomar/Syphon"
+                  displayName="Project Syphon"
+                  branches={2}
+                  commits={93}
+                  pullRequests={0}
+                  stars={0}
+                />
+                <ProjectCard
+                  icon={Gamepad2}
+                  iconColor="bg-rose-500"
+                  repoName="Redomar/JavaGame"
+                  displayName="JavaGame"
+                  branches={16}
+                  commits={410}
+                  pullRequests={1}
+                  stars={61}
+                />
               </div>
             </div>
           </div>
@@ -452,7 +498,7 @@ export default function Home() {
           </div>
 
           {/* Decorative Image Card */}
-          <div className="md:col-span-4 md:row-span-2 bg-[#1a1a1f] relative overflow-hidden retro-border">
+          <div className="md:col-span-4 md:row-span-2 bg-white dark:bg-[#1a1a1f] relative overflow-hidden retro-border transition-colors duration-300">
             {/* Unsplash retro neon image */}
             <div className="absolute inset-0">
               <Image
@@ -465,7 +511,7 @@ export default function Home() {
             </div>
             <div className="absolute inset-0 holographic-gradient opacity-20 mix-blend-overlay"></div>
             <div className="relative z-10 h-full flex items-center justify-center p-8">
-              <div className="text-center bg-black/60 p-8 border-4 border-white/20">
+              <div className="text-center bg-black/60 dark:bg-black/60 p-8 border-4 border-white/20">
                 <div className="text-5xl md:text-7xl font-anton uppercase text-white">
                   REDOMAR
                 </div>
