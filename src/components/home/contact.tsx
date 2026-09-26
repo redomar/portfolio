@@ -46,7 +46,11 @@ export function Contact({
           </p>
         </div>
 
-        <ContactForm />
+        <ContactForm
+          linkedinUrl={
+            profile.links.find((link) => link.kind === "linkedin")?.url
+          }
+        />
 
         <ul
           aria-label="Profiles"

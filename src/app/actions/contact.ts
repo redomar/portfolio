@@ -7,12 +7,18 @@ export type ContactField = "name" | "email" | "company" | "role" | "message";
 export type ContactState =
   | { status: "idle" }
   | { status: "success"; name: string }
+  /** Daily limit reached: send people to LinkedIn until `lockedUntil` (ms epoch). */
+  | { status: "limited"; lockedUntil: number }
   | {
       status: "error";
       message: string;
       fieldErrors?: Partial<Record<ContactField, string>>;
       values?: Partial<Record<ContactField, string>>;
     };
+
+export type ContactAvailability =
+  | { open: true }
+  | { open: false; lockedUntil: number };
 
 const LIMITS: Record<ContactField, number> = {
   name: 100,
@@ -24,18 +30,44 @@ const LIMITS: Record<ContactField, number> = {
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MIN_FILL_MS = 3000;
-const RATE_WINDOW_MS = 60 * 60 * 1000;
-const RATE_MAX = 5;
+const DAY_MS = 24 * 60 * 60 * 1000;
+/** Messages accepted site-wide per day before the form closes for 24 hours. */
+const DAILY_LIMIT = 10;
+/** Messages one visitor (IP) can send per day, so nobody uses up the whole allowance. */
+const PER_IP_DAILY_LIMIT = 3;
 
-// Per-instance memory is enough for a single-container site; it resets on deploy.
-const recent = new Map<string, number[]>();
+// Per-instance memory for a single-container site. The n8n workflow keeps the
+// authoritative daily count (it survives redeploys); this mirrors its lock so the
+// page can show the LinkedIn fallback without a round trip, and covers local dev.
+const site = { windowStart: 0, count: 0, lockedUntil: 0 };
+const perIp = new Map<string, number[]>();
 
-function rateLimited(key: string): boolean {
-  const now = Date.now();
-  const hits = (recent.get(key) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
-  hits.push(now);
-  recent.set(key, hits);
-  return hits.length > RATE_MAX;
+function lockedUntil(now = Date.now()): number | null {
+  return site.lockedUntil > now ? site.lockedUntil : null;
+}
+
+function lockUntil(until: number) {
+  site.lockedUntil = Math.max(site.lockedUntil, until);
+}
+
+function recordAccepted(now = Date.now()) {
+  if (now - site.windowStart >= DAY_MS || site.lockedUntil) {
+    site.windowStart = now;
+    site.count = 0;
+    site.lockedUntil = 0;
+  }
+  site.count += 1;
+  if (site.count >= DAILY_LIMIT) lockUntil(now + DAY_MS);
+}
+
+function ipLimited(ip: string, now = Date.now()): boolean {
+  const hits = (perIp.get(ip) ?? []).filter((t) => now - t < DAY_MS);
+  perIp.set(ip, hits);
+  return hits.length >= PER_IP_DAILY_LIMIT;
+}
+
+function recordIp(ip: string, now = Date.now()) {
+  perIp.set(ip, [...(perIp.get(ip) ?? []), now]);
 }
 
 function field(form: FormData, name: ContactField): string {
@@ -44,10 +76,19 @@ function field(form: FormData, name: ContactField): string {
     .slice(0, LIMITS[name]);
 }
 
+/** Lets the (static) page decide on load whether to show the form or LinkedIn. */
+export async function getContactAvailability(): Promise<ContactAvailability> {
+  const until = lockedUntil();
+  return until ? { open: false, lockedUntil: until } : { open: true };
+}
+
 export async function submitContact(
   _prev: ContactState,
   form: FormData,
 ): Promise<ContactState> {
+  const locked = lockedUntil();
+  if (locked) return { status: "limited", lockedUntil: locked };
+
   const values = {
     name: field(form, "name"),
     email: field(form, "email"),
@@ -89,11 +130,11 @@ export async function submitContact(
     requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     requestHeaders.get("x-real-ip") ||
     "unknown";
-  if (rateLimited(ip)) {
+  if (ipLimited(ip)) {
     return {
       status: "error",
       message:
-        "You've sent a few messages already. Please try again in an hour.",
+        "You've already sent a few messages today. I'll reply soon, or you can message me on LinkedIn.",
       values,
     };
   }
@@ -111,6 +152,8 @@ export async function submitContact(
         "[contact] CONTACT_WEBHOOK_URL not set; submission:",
         payload,
       );
+      recordIp(ip);
+      recordAccepted();
       return { status: "success", name: values.name };
     }
     console.error("[contact] CONTACT_WEBHOOK_URL is not configured");
@@ -132,9 +175,25 @@ export async function submitContact(
           : {}),
       },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(10_000),
+      signal: AbortSignal.timeout(15_000),
     });
+    const body = (await response.json().catch(() => ({}))) as {
+      lockedUntil?: number | null;
+    };
+
+    if (response.status === 429) {
+      const until =
+        typeof body.lockedUntil === "number"
+          ? body.lockedUntil
+          : Date.now() + DAY_MS;
+      lockUntil(until);
+      return { status: "limited", lockedUntil: until };
+    }
     if (!response.ok) throw new Error(`Webhook responded ${response.status}`);
+
+    recordIp(ip);
+    recordAccepted();
+    if (typeof body.lockedUntil === "number") lockUntil(body.lockedUntil);
   } catch (error) {
     console.error("[contact] delivery failed:", error);
     return {
