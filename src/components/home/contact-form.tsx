@@ -1,10 +1,11 @@
 "use client";
 
-import { CheckCircle2, Send } from "lucide-react";
+import { CheckCircle2, Clock, Send } from "lucide-react";
 import { useActionState, useEffect, useId, useState } from "react";
 import {
   type ContactField,
   type ContactState,
+  getContactAvailability,
   submitContact,
 } from "@/app/actions/contact";
 
@@ -82,14 +83,71 @@ function Field({
   );
 }
 
-export function ContactForm() {
+/** Shown instead of the form while the daily message limit is in effect. */
+function LinkedInFallback({
+  lockedUntil,
+  linkedinUrl,
+}: {
+  lockedUntil: number;
+  linkedinUrl?: string;
+}) {
+  const reopens = new Date(lockedUntil).toLocaleString(undefined, {
+    weekday: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return (
+    <output className="flex flex-col gap-4 border-2 border-white bg-black/40 p-6">
+      <Clock aria-hidden="true" className="size-8 text-[#ffff00]" />
+      <p className="font-anton text-3xl uppercase">Inbox full for today</p>
+      <p className="max-w-[52ch] text-white/90">
+        I’ve had a lot of messages today, so the form is paused. Message me on
+        LinkedIn instead and I’ll get back to you.
+      </p>
+      {linkedinUrl && (
+        <a
+          href={linkedinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex min-h-12 w-fit items-center gap-3 bg-white px-6 font-bebas-neue text-2xl tracking-[0.12em] text-[#0d0d10] shadow-[5px_5px_0_#0d0d10] transition-[transform,box-shadow] duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_#0d0d10] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0"
+        >
+          Message me on LinkedIn
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
+      )}
+      <p className="font-mono text-xs text-white/75">
+        The form reopens {reopens}.
+      </p>
+    </output>
+  );
+}
+
+export function ContactForm({ linkedinUrl }: { linkedinUrl?: string }) {
   const [state, formAction, pending] = useActionState(
     submitContact,
     initialState,
   );
   // Set after mount so server and client HTML match; used for bot timing only.
   const [startedAt, setStartedAt] = useState("0");
-  useEffect(() => setStartedAt(String(Date.now())), []);
+  // The page is static, so ask the server whether today's limit has been reached.
+  const [pausedUntil, setPausedUntil] = useState<number | null>(null);
+  useEffect(() => {
+    setStartedAt(String(Date.now()));
+    getContactAvailability()
+      .then((availability) => {
+        if (!availability.open) setPausedUntil(availability.lockedUntil);
+      })
+      .catch(() => {});
+  }, []);
+
+  const lockedUntil =
+    state.status === "limited" ? state.lockedUntil : pausedUntil;
+  if (lockedUntil && lockedUntil > Date.now()) {
+    return (
+      <LinkedInFallback lockedUntil={lockedUntil} linkedinUrl={linkedinUrl} />
+    );
+  }
 
   if (state.status === "success") {
     return (
