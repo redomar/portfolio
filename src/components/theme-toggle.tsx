@@ -1,8 +1,8 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "./theme-provider";
 import { useEffect, useState } from "react";
+import { useTheme } from "./theme-provider";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -16,12 +16,16 @@ export function ThemeToggle() {
     return null;
   }
 
-  const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="fixed top-8 left-8 z-50 group"
+      type="button"
+      className="absolute md:fixed top-8 left-8 z-50 group"
       aria-label="Toggle theme"
     >
       <div className="relative">

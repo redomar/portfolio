@@ -20,7 +20,8 @@ const initialState: ThemeProviderState = {
   setTheme: () => null,
 };
 
-const ThemeProviderContext = React.createContext<ThemeProviderState>(initialState);
+const ThemeProviderContext =
+  React.createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
@@ -29,7 +30,10 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = React.useState<Theme>(
-    () => (typeof window !== "undefined" ? (localStorage.getItem(storageKey) as Theme) : defaultTheme) || defaultTheme
+    () =>
+      (typeof window !== "undefined"
+        ? (localStorage.getItem(storageKey) as Theme)
+        : defaultTheme) || defaultTheme,
   );
 
   React.useEffect(() => {

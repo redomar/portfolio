@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getBuildInfo } from "@/lib/build-info";
 
 const FIRST_YEAR = 2025;
@@ -12,9 +13,28 @@ export function SiteFooter() {
     <footer className="relative bg-[#F9F7F3] dark:bg-[#0d0d10] transition-colors duration-300">
       <div className="h-1 w-full holographic-gradient" />
       <div className="max-w-[1600px] mx-auto px-4 md:px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <p className="font-bebas-neue text-xl tracking-[0.2em] text-[#1a1a1f] dark:text-white">
-          © {years} Mohamed Omar · All rights reserved
-        </p>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <p className="font-bebas-neue text-xl tracking-[0.2em] text-[#1a1a1f] dark:text-white">
+            © {years} Mohamed Omar · All rights reserved
+          </p>
+          <nav
+            aria-label="Footer"
+            className="flex gap-4 font-bebas-neue text-lg tracking-[0.2em]"
+          >
+            <Link
+              href="/"
+              className="text-[#1a1a1f]/70 dark:text-white/70 hover:text-[#ff0080] dark:hover:text-[#ff0080] transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              href="/cv"
+              className="text-[#1a1a1f]/70 dark:text-white/70 hover:text-[#00d4ff] dark:hover:text-[#00d4ff] transition-colors"
+            >
+              Full CV
+            </Link>
+          </nav>
+        </div>
         <dl className="flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs text-[#1a1a1f]/70 dark:text-white/60">
           <div className="flex gap-1.5">
             <dt>version</dt>

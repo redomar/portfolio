@@ -1,0 +1,455 @@
+/*
+ * /cv page styles. Everything is scoped under `.cv` so nothing leaks into the
+ * rest of the site if this stylesheet stays loaded after client navigation.
+ *
+ * Text accents have a darker light-theme value so they keep >= 4.5:1 contrast
+ * on the cream page; the neon originals are used for text only in dark mode.
+ */
+
+.cv {
+  --cv-bg: #f9f7f3;
+  --cv-surface: #ffffff;
+  --cv-surface-2: #f1eee8;
+  --cv-ink: #1a1a1f;
+  --cv-ink-2: rgb(26 26 31 / 0.84);
+  --cv-ink-3: rgb(26 26 31 / 0.68);
+  --cv-line: rgb(26 26 31 / 0.12);
+  --cv-line-strong: rgb(26 26 31 / 0.24);
+  --cv-pink: #c2005f;
+  --cv-cyan: #006f8a;
+  --cv-mint: #00733f;
+  --cv-violet: #7d00b3;
+  --cv-amber: #7a5c00;
+  --cv-chip-bg: rgb(26 26 31 / 0.05);
+  --cv-glow: 0 0 0 transparent;
+
+  /* z-index scale for this page */
+  --cv-z-nav: 40;
+
+  background: var(--cv-bg);
+  color: var(--cv-ink);
+}
+
+.dark .cv {
+  --cv-bg: #0d0d10;
+  --cv-surface: #1a1a1f;
+  --cv-surface-2: #141418;
+  --cv-ink: #ffffff;
+  --cv-ink-2: rgb(255 255 255 / 0.84);
+  --cv-ink-3: rgb(255 255 255 / 0.64);
+  --cv-line: rgb(255 255 255 / 0.1);
+  --cv-line-strong: rgb(255 255 255 / 0.22);
+  --cv-pink: #ff3d9e;
+  --cv-cyan: #00d4ff;
+  --cv-mint: #00ff88;
+  --cv-violet: #c77dff;
+  --cv-amber: #ffff00;
+  --cv-chip-bg: rgb(255 255 255 / 0.06);
+}
+
+.cv :focus-visible {
+  outline: 2px solid var(--cv-cyan);
+  outline-offset: 3px;
+}
+
+/* ---------- Links ---------- */
+
+.cv-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.2em;
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--cv-cyan) 55%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition:
+    color 160ms ease-out,
+    text-decoration-color 160ms ease-out;
+}
+
+.cv-link:hover {
+  color: var(--cv-cyan);
+  text-decoration-color: var(--cv-cyan);
+}
+
+.cv-link-icon {
+  align-self: center;
+  opacity: 0.6;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cv-link:hover .cv-link-icon {
+  transform: translate(2px, -2px);
+  opacity: 1;
+}
+
+/* RichText links inside prose inherit a readable accent in light mode. */
+.cv-prose a:hover {
+  color: var(--cv-cyan);
+}
+
+/* ---------- Chips ---------- */
+
+.cv-chip {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.45rem 0.6rem;
+  background: var(--cv-chip-bg);
+  border: 1px solid var(--cv-line);
+  color: var(--cv-ink-2);
+  white-space: nowrap;
+}
+
+/* ---------- Surfaces ---------- */
+
+.cv-panel {
+  background: var(--cv-surface);
+  border: 1px solid var(--cv-line);
+}
+
+/* ---------- Hero ---------- */
+
+.cv-name {
+  font-size: clamp(3rem, 11vw, 6rem);
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.cv-status-dot {
+  position: relative;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--cv-mint);
+}
+
+.cv-status-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--cv-mint);
+  animation: cv-ping 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes cv-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+/* Page-load choreography: content is visible by default; the animation only
+   adds a short tracking-in wipe on top. */
+.cv-enter {
+  animation: cv-enter 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes cv-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ---------- Experience timeline ---------- */
+
+.cv-timeline {
+  position: relative;
+}
+
+/* The rail: a holographic spine running through every employer node. */
+.cv-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.6875rem;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    #ff0080 0%,
+    #b200ff 30%,
+    #00d4ff 60%,
+    #00ff88 100%
+  );
+  opacity: 0.55;
+}
+
+.cv-node {
+  position: absolute;
+  top: 0.35rem;
+  left: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  background: var(--cv-bg);
+}
+
+.cv-node::before {
+  content: "";
+  width: 0.85rem;
+  height: 0.85rem;
+  transform: rotate(45deg);
+  background: var(--emp, #b200ff);
+  box-shadow:
+    0 0 0 2px var(--cv-bg),
+    0 0 0 3px var(--cv-line-strong);
+}
+
+.dark .cv-node::before {
+  background: color-mix(in oklch, var(--emp, #b200ff) 72%, white);
+  box-shadow:
+    0 0 0 2px var(--cv-bg),
+    0 0 12px color-mix(in oklch, var(--emp, #b200ff) 70%, white);
+}
+
+/* Roles inside one employer hang off a thin secondary rail. */
+.cv-roles {
+  position: relative;
+}
+
+.cv-role {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.cv-role::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  border: 2px solid var(--cv-line-strong);
+  background: var(--cv-bg);
+}
+
+.cv-role[data-current-step="true"]::before {
+  border-color: var(--cv-mint);
+  background: var(--cv-mint);
+}
+
+.cv-role:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0.1875rem;
+  top: 1.25rem;
+  bottom: -1.75rem;
+  width: 2px;
+  background: var(--cv-line);
+}
+
+/* Promotion ladder: bars rise with each step, like a signal meter. */
+.cv-rung-bar {
+  height: calc(0.75rem + var(--step) * 0.85rem);
+  background: color-mix(in oklch, var(--emp, #b200ff) 35%, transparent);
+  border-top: 3px solid var(--emp, #b200ff);
+}
+
+.cv-rung[data-top="true"] .cv-rung-bar {
+  background: color-mix(in oklch, var(--emp, #b200ff) 70%, transparent);
+}
+
+.dark .cv-rung-bar {
+  border-top-color: color-mix(in oklch, var(--emp, #b200ff) 70%, white);
+  background: color-mix(in oklch, var(--emp, #b200ff) 45%, transparent);
+}
+
+.dark .cv-rung[data-top="true"] .cv-rung-bar {
+  background: color-mix(in oklch, var(--emp, #b200ff) 85%, white 5%);
+}
+
+/* Career span bar */
+.cv-span-seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--emp, #b200ff);
+}
+
+.dark .cv-span-seg {
+  background: color-mix(in oklch, var(--emp, #b200ff) 72%, white);
+}
+
+.cv-swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: none;
+  background: var(--emp, #b200ff);
+}
+
+.dark .cv-swatch {
+  background: color-mix(in oklch, var(--emp, #b200ff) 72%, white);
+}
+
+/* ---------- Section navigation ---------- */
+
+@media (max-width: 1023.98px) {
+  .cv-nav {
+    z-index: var(--cv-z-nav);
+    margin-inline: -1rem;
+    padding-block: 0.25rem;
+    border-top: 1px solid var(--cv-line);
+    background: color-mix(in srgb, var(--cv-bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .cv-nav-list {
+    scrollbar-width: none;
+  }
+
+  .cv-nav-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cv-nav-link[aria-current="true"] {
+    box-shadow: inset 0 -3px 0 var(--cv-pink);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .cv-nav {
+    margin-inline: -2rem;
+  }
+}
+
+.cv-nav-link {
+  transition: color 160ms ease-out;
+}
+
+.cv-nav-link[aria-current="true"] {
+  color: var(--cv-ink);
+}
+
+.cv-nav-mark {
+  transform: scaleX(0.35);
+  transform-origin: left;
+  opacity: 0.35;
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 260ms ease-out;
+}
+
+.cv-nav-link:hover .cv-nav-mark {
+  opacity: 0.7;
+}
+
+.cv-nav-link[aria-current="true"] .cv-nav-mark {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* ---------- Motion preferences ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cv-enter,
+  .cv-status-dot::after {
+    animation: none;
+  }
+
+  .cv *,
+  .cv *::before,
+  .cv *::after {
+    transition-duration: 0.01ms;
+  }
+
+  html:has(.cv) {
+    scroll-behavior: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.cv) {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---------- Print: a clean, ink-friendly CV ---------- */
+
+@media print {
+  @page {
+    margin: 14mm 12mm;
+  }
+
+  body:has(.cv)::before,
+  body:has(.cv) > footer,
+  body:has(.cv) button[aria-label="Toggle theme"],
+  .cv [data-print="hide"] {
+    display: none;
+  }
+
+  body:has(.cv) {
+    background: #ffffff;
+  }
+
+  .cv,
+  .dark .cv {
+    --cv-bg: #ffffff;
+    --cv-surface: #ffffff;
+    --cv-surface-2: #ffffff;
+    --cv-ink: #000000;
+    --cv-ink-2: #1a1a1a;
+    --cv-ink-3: #444444;
+    --cv-line: #cccccc;
+    --cv-line-strong: #999999;
+    --cv-pink: #000000;
+    --cv-cyan: #000000;
+    --cv-mint: #000000;
+    --cv-violet: #000000;
+    --cv-amber: #000000;
+    --cv-chip-bg: transparent;
+    font-size: 10.5pt;
+  }
+
+  .cv .vhs-scanlines::before,
+  .cv .holographic-gradient,
+  .cv .retro-border {
+    background: none;
+    border-image: none;
+  }
+
+  .cv .retro-border {
+    border: 0;
+  }
+
+  .cv-enter {
+    animation: none;
+  }
+
+  .cv h2,
+  .cv h3,
+  .cv h4 {
+    break-after: avoid;
+  }
+
+  .cv li,
+  .cv-avoid-break {
+    break-inside: avoid;
+  }
+
+  .cv-link {
+    text-decoration: none;
+  }
+
+  .cv-link-icon {
+    display: none;
+  }
+}
