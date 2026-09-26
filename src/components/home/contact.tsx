@@ -1,12 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import NextLink from "next/link";
 import type { Profile } from "@/data/profile.types";
+import { ContactForm } from "./contact-form";
 import { ExternalLink, iconForLink } from "./links";
 
 const button =
   "group inline-flex min-h-12 items-center gap-3 border-2 border-white bg-black/80 px-5 transition-colors hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 
-/** Closing call to action: public profile links only (no email or phone). */
+/**
+ * Closing call to action. Recruiters leave their details through the form, so the
+ * site never publishes an email address or phone number.
+ */
 export function Contact({
   profile,
   wide = false,
@@ -35,14 +39,19 @@ export function Contact({
             <br />
             connect
           </h2>
-          <p className="mt-4 max-w-[48ch] text-lg leading-relaxed text-white/90">
+          <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-white/90">
             {profile.openToWork
-              ? `Open to new roles. Based in ${profile.location}.`
-              : `Based in ${profile.location}.`}
+              ? `Hiring? I’m open to new roles and based in ${profile.location}. Leave your details and I’ll get back to you.`
+              : `Based in ${profile.location}. Leave your details and I’ll get back to you.`}
           </p>
         </div>
 
-        <ul className="mt-auto flex flex-wrap gap-3">
+        <ContactForm />
+
+        <ul
+          aria-label="Profiles"
+          className="mt-auto flex flex-wrap gap-3 border-t-2 border-white/25 pt-6"
+        >
           <li>
             <NextLink href="/cv" className={button}>
               <span className="font-bebas-neue text-xl tracking-[0.12em]">

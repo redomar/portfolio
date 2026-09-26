@@ -83,6 +83,7 @@ export const content: SiteContent = {
       id: "pwc",
       company: "PricewaterhouseCoopers (PwC UK)",
       shortName: "PwC UK",
+      url: "https://www.pwc.co.uk",
       color: "#FD5105",
       roles: [
         {
@@ -217,7 +218,7 @@ export const content: SiteContent = {
     {
       id: "syphon",
       title: "Syphon",
-      start: "2024-09",
+      start: "2025-08",
       end: null,
       description:
         "A budget tracking application built in **Next.js** and **TypeScript**, used as a proving ground for production observability: **OpenTelemetry** tracing, authentication and a microservice-based deployment architecture.",

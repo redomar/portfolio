@@ -40,16 +40,11 @@ export function Hero({ profile }: { profile: Profile }) {
           className="absolute inset-0 holographic-gradient opacity-15 dark:opacity-20"
         />
         <div className="relative z-10 flex h-full flex-col gap-10 p-6 sm:p-8 md:p-12">
-          {/* Top row clears the fixed theme toggle on the left. */}
-          <div className="flex min-h-12 flex-wrap items-center justify-end gap-2 pl-16 md:pl-20">
-            <p
-              className={`inline-flex items-center gap-1.5 font-mono text-xs ${inkSoft}`}
-            >
-              <MapPin aria-hidden="true" className="size-4" />
-              {profile.location}
-            </p>
+          {/* Status sits in the same top-right spot, at the same height, as the
+              terminal badge on the photo card beside it. */}
+          <div className="absolute top-4 right-4 z-20 flex flex-col items-end gap-2">
             {profile.openToWork && (
-              <p className="inline-flex items-center gap-2 border-2 border-[#007a45] dark:border-[#00ff88] bg-white/70 dark:bg-black/40 px-3 py-1 font-bebas-neue text-lg tracking-[0.15em] text-[#007a45] dark:text-[#00ff88]">
+              <p className="inline-flex h-12 items-center gap-2 border-2 border-[#007a45] dark:border-[#00ff88] bg-white/80 dark:bg-black/80 px-4 font-bebas-neue text-lg tracking-[0.15em] text-[#007a45] dark:text-[#00ff88]">
                 <span aria-hidden="true" className="relative flex size-2.5">
                   <span className="absolute inline-flex size-full rounded-full bg-[#00ff88] opacity-75 motion-safe:animate-ping" />
                   <span className="relative inline-flex size-2.5 rounded-full bg-[#00c96b] dark:bg-[#00ff88]" />
@@ -57,7 +52,15 @@ export function Hero({ profile }: { profile: Profile }) {
                 Open to new roles
               </p>
             )}
+            <p
+              className={`inline-flex items-center gap-1.5 font-mono text-xs ${inkSoft}`}
+            >
+              <MapPin aria-hidden="true" className="size-4" />
+              {profile.location}
+            </p>
           </div>
+          {/* Keeps the name clear of the theme toggle and the status badge. */}
+          <div aria-hidden="true" className="h-12" />
 
           <div className="lens-flare">
             <h1

@@ -6,6 +6,7 @@ import {
   Linkedin,
   type LucideIcon,
   MapPin,
+  Send,
 } from "lucide-react";
 import Link from "next/link";
 import type {
@@ -151,6 +152,15 @@ export function CvHero({
             className="cv-enter mt-7 flex flex-wrap gap-2.5"
             style={{ "--i": 4 } as React.CSSProperties}
           >
+            <li>
+              <Link
+                href="/#contact"
+                className="group inline-flex min-h-11 items-center gap-2 border-2 border-(--cv-pink) bg-(--cv-pink) px-3.5 font-bebas-neue text-lg tracking-[0.14em] text-white transition-colors duration-200 hover:border-(--cv-ink) hover:bg-(--cv-ink) hover:text-(--cv-surface)"
+              >
+                <Send aria-hidden="true" className="size-[18px]" />
+                Get in touch
+              </Link>
+            </li>
             {profile.links.map((link) => {
               const Icon = LINK_ICONS[link.kind] ?? Link2;
               return (
