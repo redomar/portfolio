@@ -251,6 +251,43 @@ export const content: SiteContent = {
       featured: true,
     },
     {
+      id: "ofp-reader",
+      title: "OFP Reader",
+      start: "2026-09",
+      end: null,
+      description:
+        "Turns a **SimBrief** flight plan PDF into an interactive pilot chart, entirely in the browser: fuel margins, a vertical profile with terrain, a route map, decoded weather and searchable NOTAMs. Built solo, from design to deployment. For flight simulation only.",
+      highlights: [
+        "No backend: fetches and parses the PDF client-side with **pdf.js** and ships as a static site behind **nginx**.",
+        "Rebuilds the flight plan's fixed-width columns from pdf.js text positions, so tables parse exactly.",
+        "Linked vertical profile, route map and nav log (hover or arrow keys), with MORA terrain and a minimum-fuel line.",
+        "Pilots log actual times, fuel and nav-log values as they fly; entries save per flight plan in **IndexedDB**, with cached PDFs and a settings page to export or delete them.",
+      ],
+      tech: [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "pdf.js",
+        "IndexedDB",
+        "Docker",
+        "nginx",
+        "Dokploy",
+      ],
+      links: [
+        {
+          label: "Source on GitHub",
+          url: "https://github.com/redomar/ofp-reader",
+          kind: "repo",
+        },
+        {
+          label: "Live site",
+          url: "https://charts.massorbit.co.uk",
+          kind: "website",
+        },
+      ],
+      featured: true,
+    },
+    {
       id: "full-stack-web-app",
       title: "Full Stack Web Application",
       start: "2019-10",
