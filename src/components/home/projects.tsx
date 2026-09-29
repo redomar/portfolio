@@ -14,14 +14,20 @@ export function Projects({
 }) {
   if (projects.length === 0) return null;
 
+  // Keep rows full on the 3-column grid: the intro sits beside the cards when
+  // that fills the row (2, 5, … projects); otherwise it becomes a header row.
+  const introBesideCards = (projects.length + 1) % 3 === 0;
+  // On the 2-column grid an odd last card would leave a gap, so let it span.
+  const oddOnTablet = projects.length % 2 === 1;
+
   return (
     <section
       id="projects"
       aria-labelledby="projects-title"
-      className="grid scroll-mt-6 grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+      className={`grid scroll-mt-6 grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 ${oddOnTablet ? "md:max-lg:[&>*:last-child]:col-span-2" : ""}`}
     >
       <div
-        className={`${card} vhs-scanlines flex flex-col gap-6 p-6 sm:p-8 md:col-span-2 lg:col-span-1`}
+        className={`${card} vhs-scanlines flex flex-col gap-6 p-6 sm:p-8 md:col-span-2 ${introBesideCards ? "lg:col-span-1" : "lg:col-span-3 lg:flex-row lg:items-end lg:justify-between lg:gap-10"}`}
       >
         <div
           aria-hidden="true"
@@ -45,7 +51,9 @@ export function Projects({
             behind each one.
           </p>
         </div>
-        <div className="relative z-20 mt-auto flex flex-wrap items-center gap-x-6 gap-y-2">
+        <div
+          className={`relative z-20 mt-auto flex flex-wrap items-center gap-x-6 gap-y-2 ${introBesideCards ? "" : "lg:mt-0 lg:shrink-0"}`}
+        >
           <MoreLink href="/cv#projects">All projects</MoreLink>
           {github && (
             <ExternalLink

@@ -46,7 +46,7 @@ The site itself is a small showcase of how I like to build front ends:
 - Hero with name, role and a typewriter effect cycling through my interests
 - About section and career timeline
 - Tech stack overview
-- Featured projects: [Syphon](https://github.com/redomar/syphon) and [JavaGame](https://github.com/redomar/JavaGame)
+- Featured projects: [Syphon](https://github.com/redomar/syphon), [OFP Reader](https://github.com/redomar/ofp-reader) and [JavaGame](https://github.com/redomar/JavaGame)
 - Contact links
 
 ---
